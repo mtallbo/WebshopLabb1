@@ -6,7 +6,7 @@ using Webshop.Models;
 
 namespace Webshop.Services
 {
-    interface IProductService
+    public interface IProductService
     {
         Product GetById(Guid id);
         List<Product> GetAll();

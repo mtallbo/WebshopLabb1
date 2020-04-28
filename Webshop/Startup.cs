@@ -12,6 +12,7 @@ using Webshop.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Webshop.Services;
 
 namespace Webshop
 {
@@ -33,6 +34,7 @@ namespace Webshop
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
+            services.AddSingleton<IProductService, ProductService>();
             services.AddRazorPages();
         }
 
