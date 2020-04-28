@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Webshop.Models;
@@ -20,6 +21,8 @@ namespace Webshop.Controllers
 
         public IActionResult Index()
         {
+            //Set string User = Name of logged in user
+            HttpContext.Session.SetString("User", User.Identity.Name);
             return View();
         }
 
