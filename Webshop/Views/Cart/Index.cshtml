@@ -1,0 +1,20 @@
+﻿@model IEnumerable<CartProduct>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Din varukorg</h1>
+
+@foreach (var product in Model)
+{
+    <p>@product.Product.Name</p>
+    <p>@product.Quantity</p>
+}
+<p>
+    @ViewBag.TotalPrice
+</p>
+
+<p>
+    @ViewBag.EmptyCart
+</p>

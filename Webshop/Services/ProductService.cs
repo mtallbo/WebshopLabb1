@@ -14,7 +14,7 @@ namespace Webshop.Services
             for (int i = 0; i < 10; i++)
             {
                 Products.Add(new Product {
-                    Id = new Guid(),
+                    Id = Guid.NewGuid(),
                     Description = "En kaffekopp man kan dricka kaffe ur", 
                     ImageURL = "https://networkprojectum.se/wp-content/uploads/2017/11/placeholder.png", 
                     Name = "Kaffekopp",

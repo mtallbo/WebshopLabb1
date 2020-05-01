@@ -21,8 +21,6 @@ namespace Webshop.Controllers
 
         public IActionResult Index()
         {
-            //Set string User = Name of logged in user
-            HttpContext.Session.SetString("User", User.Identity.Name);
             return View();
         }
 
