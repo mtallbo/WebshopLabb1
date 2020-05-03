@@ -14,7 +14,8 @@
                 <div class="card">
                     <img class="card-img" src="@item.ImageURL" alt="@item.Name">
                     <div class="card-body">
-                        <h4 class="card-title">@item.Name</h4>
+                        @*<h4 class="card-title">@item.Name</h4>*@
+                        @Html.ActionLink(item.Name, "Details", "Product", new { productId = item.Id }, new { @class = "card-title" })
                         <div class="buy d-flex justify-content-between align-items-center">
                             <div class="price text-success"><h5 class="mt-4">SEK @item.Price</h5></div>
                             @Html.ActionLink("Lägg till", "Add", "Cart", new { productId = item.Id }, new { @class = "btn btn-primary" })

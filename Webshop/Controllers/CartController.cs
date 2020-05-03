@@ -23,6 +23,7 @@ namespace Webshop.Controllers
         public const string SessionCartName = "_Cart";
         public const string SessionTotalPrice = "_TotalPrice";
 
+        [Authorize]
         public IActionResult Index()
         {
             var sessionCart = HttpContext.Session.Get<List<CartProduct>>(SessionCartName);
