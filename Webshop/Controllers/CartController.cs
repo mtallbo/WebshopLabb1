@@ -35,7 +35,7 @@ namespace Webshop.Controllers
             else
             {
                 sessionCart = new List<CartProduct>();
-                ViewBag.EmptyCart = "Cart Empty";
+                ViewBag.EmptyCart = "Tom varukorg";
                 return View(sessionCart);
             };
         }

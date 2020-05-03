@@ -15,16 +15,9 @@
                     <img class="card-img" src="@item.ImageURL" alt="@item.Name">
                     <div class="card-body">
                         <h4 class="card-title">@item.Name</h4>
-                        <p class="card-text">
-                            @item.Description
-                        </p>
                         <div class="buy d-flex justify-content-between align-items-center">
                             <div class="price text-success"><h5 class="mt-4">SEK @item.Price</h5></div>
-                            @Html.ActionLink("Lägg till", "Add", "Cart", new { productId = item.Id }, new { @class = ""})
-                            @*<form method="post" asp-action="Add" asp-controller="Cart">
-                                <input type="hidden" value="@item.Id" />
-                                <input type="submit" value="Lägg till" class="btn btn-danger mt-3"></i>
-                            </form>*@
+                            @Html.ActionLink("Lägg till", "Add", "Cart", new { productId = item.Id }, new { @class = "btn btn-primary" })
                         </div>
                     </div>
                 </div>
