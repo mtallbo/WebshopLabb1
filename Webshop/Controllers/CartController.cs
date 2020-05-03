@@ -45,6 +45,7 @@ namespace Webshop.Controllers
         {
             var product = _productService.GetById(productId);
             var cart = HttpContext.Session.Get<List<CartProduct>>(SessionCartName);
+            
             if (cart != null)
             {
                 if (cart.Any(p => p.Product.Id == productId))
