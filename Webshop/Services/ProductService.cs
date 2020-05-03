@@ -13,13 +13,28 @@ namespace Webshop.Services
         {
             for (int i = 0; i < 10; i++)
             {
-                Products.Add(new Product {
-                    Id = Guid.NewGuid(),
-                    Description = "En kaffekopp man kan dricka kaffe ur", 
-                    ImageURL = "https://networkprojectum.se/wp-content/uploads/2017/11/placeholder.png", 
-                    Name = "Kaffekopp",
-                    Price = 200
-                });
+                if(i % 2 == 0)
+                {
+                    Products.Add(new Product
+                    {
+                        Id = Guid.NewGuid(),
+                        Description = "En kaffekopp man kan dricka kaffe ur",
+                        ImageURL = "https://networkprojectum.se/wp-content/uploads/2017/11/placeholder.png",
+                        Name = "Kaffekopp",
+                        Price = 200
+                    });
+                } else
+                {
+                    Products.Add(new Product
+                    {
+                        Id = Guid.NewGuid(),
+                        Description = "En gaming mus med RGB för att höja ditt aim",
+                        ImageURL = "https://networkprojectum.se/wp-content/uploads/2017/11/placeholder.png",
+                        Name = "Logitech G903",
+                        Price = 999
+                    });
+                }
+                
             }
         }
 
