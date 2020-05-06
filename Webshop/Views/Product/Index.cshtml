@@ -18,7 +18,8 @@
                         @Html.ActionLink(item.Name, "Details", "Product", new { productId = item.Id }, new { @class = "card-title" })
                         <div class="buy d-flex justify-content-between align-items-center">
                             <div class="price text-success"><h5 class="mt-4">SEK @item.Price</h5></div>
-                            @Html.ActionLink("Lägg till", "Add", "Cart", new { productId = item.Id }, new { @class = "btn btn-primary" })
+                            <button class="btn btn-primary" onclick="AddToCart('@item.Id')">Lägg till</button>
+                            @*@Html.ActionLink("Lägg till", "Add", "Cart", new { productId = item.Id }, new { @class = "btn btn-primary" })*@
                         </div>
                     </div>
                 </div>
