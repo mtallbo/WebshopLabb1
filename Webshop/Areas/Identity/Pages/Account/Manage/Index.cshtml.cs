@@ -42,6 +42,10 @@ namespace Webshop.Areas.Identity.Pages.Account.Manage
             public string City { get; set; }
             [Display(Name = "Postnummer")]
             public string PostalCode { get; set; }
+            [Display(Name = "Förnamn")]
+            public string FirstName { get; set; }
+            [Display(Name = "Efternamn")]
+            public string LastName { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -53,6 +57,8 @@ namespace Webshop.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 PhoneNumber = phoneNumber,
                 Adress = user.Adress,
                 City = user.City,
@@ -99,6 +105,8 @@ namespace Webshop.Areas.Identity.Pages.Account.Manage
             user.PostalCode = Input.PostalCode;
             user.Adress = Input.Adress;
             user.City = Input.City;
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
 
             await _userManager.UpdateAsync(user);
 
