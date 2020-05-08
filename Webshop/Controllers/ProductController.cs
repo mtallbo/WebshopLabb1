@@ -16,10 +16,9 @@ namespace Webshop.Controllers
         {
             _productService = productservice;
         }
+        [Authorize]
         public IActionResult Index()
         {
-            //Get string of "User", which is the logged in users name.
-            ViewBag.sessionv =  HttpContext.Session.GetString("User");
             var products = _productService.GetAll();
             return View(products);
         }
