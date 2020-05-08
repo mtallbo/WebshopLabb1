@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -8,16 +9,19 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Webshop.Models;
 using Webshop.Services;
+using Webshop.ViewModels;
 
 namespace Webshop.Controllers
 {
     public class CartController : Controller
     {
         private readonly IProductService _productService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public CartController(IProductService productservice)
+        public CartController(IProductService productservice, UserManager<ApplicationUser> usermanager)
         {
             _productService = productservice;
+            _userManager = usermanager;
         }
 
         public const string SessionCartName = "_Cart";
@@ -28,16 +32,25 @@ namespace Webshop.Controllers
         {
             var sessionCart = HttpContext.Session.Get<List<CartProduct>>(SessionCartName);
             var sessionTotalPrice = HttpContext.Session.Get<decimal>(SessionTotalPrice);
+            var user = _userManager.GetUserAsync(User);
+
+            CartViewModel cvm = new CartViewModel();
+            if (user != null)
+            {
+                cvm.User = user.Result;
+            }
+
             if (sessionCart != null)
             {
+                cvm.CartProducts = sessionCart;
                 ViewBag.TotalPrice = sessionTotalPrice;
-                return View(sessionCart);
+                return View(cvm);
             }
             else
             {
-                sessionCart = new List<CartProduct>();
+                cvm.CartProducts = new List<CartProduct>();
                 ViewBag.EmptyCart = "Tom varukorg";
-                return View(sessionCart);
+                return View(cvm);
             };
         }
 
