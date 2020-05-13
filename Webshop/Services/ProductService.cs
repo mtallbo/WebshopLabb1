@@ -34,7 +34,6 @@ namespace Webshop.Services
                         Price = 999
                     });
                 }
-                
             }
         }
 
