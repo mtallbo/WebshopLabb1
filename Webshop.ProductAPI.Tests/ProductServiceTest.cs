@@ -1,11 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Webshop.TestLib.Services
+namespace Webshop.ProductAPI.Tests
 {
     public class ProductServiceTest
     {
