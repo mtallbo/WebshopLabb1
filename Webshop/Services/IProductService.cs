@@ -8,7 +8,7 @@ namespace Webshop.Services
 {
     public interface IProductService
     {
-        Product GetById(Guid id);
-        List<Product> GetAll();
+        Task<Product> GetById(Guid id);
+        Task<List<Product>> GetAll();
     }
 }

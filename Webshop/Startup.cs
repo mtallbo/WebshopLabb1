@@ -46,7 +46,9 @@ namespace Webshop
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
-            services.AddSingleton<IProductService, ProductService>();
+            services.AddHttpClient<IProductService, ProductService>(client =>
+                client.BaseAddress = new Uri(Configuration["APIGatewayUrl"])
+            );
             services.AddRazorPages();
         }
 
