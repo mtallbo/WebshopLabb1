@@ -12,6 +12,7 @@ namespace Webshop.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+
         public ProductController(IProductService productservice)
         {
             _productService = productservice;

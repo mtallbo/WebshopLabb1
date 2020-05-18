@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Webshop.Models;
+using Webshop.ViewModels;
 
 namespace Webshop.Services
 {
-    interface IOrderService
+    public interface IOrderService
     {
         Task<Order> GetById(Guid id);
-        Task CreateOrder(Order order);
+        Task<Order> CreateOrder(CartViewModel cartviewModel);
     }
 }

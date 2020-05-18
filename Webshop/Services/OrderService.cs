@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Webshop.Models;
+using Webshop.ViewModels;
 
 namespace Webshop.Services
 {
@@ -15,11 +16,11 @@ namespace Webshop.Services
         {
             _httpClient = client;
         }
-        public async Task CreateOrder(Order order)
+        public async Task<Order> CreateOrder(CartViewModel cartvm)
         {
-            var orderContent = new StringContent(JsonConvert.SerializeObject(order), System.Text.Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync("/order/add/", orderContent);
-            response.EnsureSuccessStatusCode();
+            var orderContent = new StringContent(JsonConvert.SerializeObject(MapCartToOrder(cartvm)), System.Text.Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync("/order/add", orderContent);
+            return JsonConvert.DeserializeObject<Order>(await response.Content.ReadAsStringAsync());
         }
 
         public async Task<Order> GetById(Guid id)
@@ -29,6 +30,21 @@ namespace Webshop.Services
             var orderresponse = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<Order>(orderresponse);
+        }
+
+        public Order MapCartToOrder(CartViewModel cart)
+        {
+            return new Order
+            {
+                ItemList = cart.CartProducts,
+                FirstName = cart.User.FirstName,
+                LastName = cart.User.LastName,
+                City = cart.User.City,
+                PostalCode = cart.User.PostalCode,
+                Adress = cart.User.Adress,
+                PhoneNumber = cart.User.PhoneNumber,
+                Email = cart.User.Email
+            };
         }
     }
 }
