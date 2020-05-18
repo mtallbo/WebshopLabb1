@@ -18,9 +18,16 @@ namespace Webshop.Services
         }
         public async Task<Order> CreateOrder(CartViewModel cartvm)
         {
-            var orderContent = new StringContent(JsonConvert.SerializeObject(MapCartToOrder(cartvm)), System.Text.Encoding.UTF8, "application/json");
+
+            var orderMapped = MapCartToOrder(cartvm);
+            var orderJSON = JsonConvert.SerializeObject(orderMapped);
+
+            var orderContent = new StringContent(orderJSON, System.Text.Encoding.UTF8, "application/json");
+
             var response = await _httpClient.PostAsync("/order/add", orderContent);
-            return JsonConvert.DeserializeObject<Order>(await response.Content.ReadAsStringAsync());
+            var orderResponse = await response.Content.ReadAsStringAsync();
+
+            return JsonConvert.DeserializeObject<Order>(orderResponse);
         }
 
         public async Task<Order> GetById(Guid id)
@@ -36,7 +43,12 @@ namespace Webshop.Services
         {
             return new Order
             {
-                ItemList = cart.CartProducts,
+                OrderItems = cart.CartProducts.Select(cp => new OrderProduct
+                {
+                    Name = cp.Product.Name,
+                    Price = cp.Product.Price,
+                    Quantity = cp.Quantity
+                }).ToList(),
                 FirstName = cart.User.FirstName,
                 LastName = cart.User.LastName,
                 City = cart.User.City,

@@ -79,13 +79,13 @@ namespace Webshop.OrderAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        public async Task<ActionResult<Order>> PostOrder([FromBody]Order order)
         {
             _context.Add(order);
             await _context.SaveChangesAsync();
             
             return CreatedAtAction(
-                nameof(GetOrder),
+                nameof(PostOrder),
                 new { Id = order.Id },
                 order);
         }

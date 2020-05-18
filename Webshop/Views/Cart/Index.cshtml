@@ -37,6 +37,7 @@ else
                 @Html.HiddenFor(model => Model.CartProducts[i].Product.Name)
                 @Html.HiddenFor(model => Model.CartProducts[i].Quantity)
                 @Html.HiddenFor(model => Model.CartProducts[i].Product.Price)
+                @Html.HiddenFor(model => Model.CartProducts[i].Product.ImageURL)
                 <tbody>
                     <tr>
                         <th scope="row" class="border-0">
@@ -79,7 +80,7 @@ else
                         <h5 class="font-weight-bold">@ViewBag.TotalPrice SEK</h5>
                     </li>
                 </ul>
-                <input type="submit" class="btn btn-dark rounded-pill py-2 btn-block">Checkout</a>
+                <input type="submit" class="btn btn-dark rounded-pill py-2 btn-block" value="Checkout">
             </div>
 
         </div>

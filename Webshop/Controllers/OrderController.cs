@@ -31,6 +31,10 @@ namespace Webshop.Controllers
         public async Task<IActionResult> Checkout(CartViewModel cartvm)
         {
             var response = await _orderService.CreateOrder(cartvm);
+            if(response != null)
+            {
+                HttpContext.Session.Clear();
+            }
             
             return RedirectToAction("Details", "Order", new { id = response.Id });
         }

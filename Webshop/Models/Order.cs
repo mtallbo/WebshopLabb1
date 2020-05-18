@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace Webshop.Models
     {
         public Order()
         {
-            ItemList = new List<CartProduct>();
+            OrderItems = new List<OrderProduct>();
         }
         public Guid Id { get; set; }
         public string FirstName { get; set; }
@@ -19,13 +20,13 @@ namespace Webshop.Models
         public string Adress { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
-        public List<CartProduct> ItemList { get; set; }
+        public List<OrderProduct> OrderItems { get; set; }
     }
 
-    public class OrderItem
+    public class OrderProduct
     {
-        public string ItemName { get; set; }
-        public decimal ItemPrice { get; set; }
+        public string Name { get; set; }
         public int Quantity { get; set; }
+        public decimal Price { get; set; }
     }
 }
