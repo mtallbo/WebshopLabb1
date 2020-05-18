@@ -49,6 +49,9 @@ namespace Webshop
             services.AddHttpClient<IProductService, ProductService>(client =>
                 client.BaseAddress = new Uri(Configuration["APIGatewayUrl"])
             );
+            services.AddHttpClient<IOrderService, OrderService>(client =>
+                client.BaseAddress = new Uri(Configuration["APIGatewayUrl"])
+            );
             services.AddRazorPages();
         }
 

@@ -24,10 +24,10 @@ namespace Webshop.OrderAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            var products = await _context.Orders.ToListAsync();
-            if (products != null && products.Count() != 0)
+            var orders = await _context.Orders.ToListAsync();
+            if (orders != null && orders.Count() != 0)
             {
-                return products;
+                return orders;
             }
             else
             {
@@ -42,10 +42,10 @@ namespace Webshop.OrderAPI.Controllers
             {
                 return BadRequest();
             }
-            var product = await _context.Orders.FindAsync(id);
-            if (product != null)
+            var order = await _context.Orders.FindAsync(id);
+            if (order != null)
             {
-                return product;
+                return order;
             }
             else
             {
@@ -54,25 +54,23 @@ namespace Webshop.OrderAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<Order>> PutOrder(Guid? id, Order product)
+        public async Task<ActionResult<Order>> PutOrder(Guid? id, Order order)
         {
-            if (id == null || product == null)
+            if (id == null || order == null)
             {
                 return BadRequest();
             }
-            var existingorder = _context.Orders.FindAsync(id);
-            if (existingorder.Result == null)
+            var existingorder = await _context.Orders.FindAsync(id);
+            if (existingorder == null)
             {
                 return Ok(new { Message = $"Order with id:{id} does not exist" });
             }
-            //existingproduct.Result.Name = product.Name;
-            //existingproduct.Result.Description = product.Description;
-            //existingproduct.Result.Category = product.Category;
-            //existingproduct.Result.Price = product.Price;
+            order.Id = existingorder.Id;
+            _context.Entry(existingorder).CurrentValues.SetValues(order);
             try
             {
                 await _context.SaveChangesAsync();
-                return Ok(new { Message = $"Order id:{existingorder.Result.Id} updated" });
+                return Ok(new { Message = $"Order id:{existingorder.Id} updated" });
             }
             catch (Exception)
             {
@@ -81,15 +79,15 @@ namespace Webshop.OrderAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order product)
+        public async Task<ActionResult<Order>> PostOrder(Order order)
         {
-            _context.Add(product);
+            _context.Add(order);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(
                 nameof(GetOrder),
-                new { Id = product.Id },
-                product);
+                new { Id = order.Id },
+                order);
         }
 
         [HttpDelete("{id}")]
@@ -99,12 +97,12 @@ namespace Webshop.OrderAPI.Controllers
             {
                 return BadRequest();
             }
-            var product = await _context.Orders.FindAsync(id);
-            if (product == null)
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
             {
                 return Ok(new { Message = $"Order id:{id} does not exist" });
             }
-            _context.Orders.Remove(product);
+            _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
 
             return NoContent();

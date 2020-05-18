@@ -58,19 +58,17 @@ namespace Webshop.ProductAPI.Controllers
             {
                 return BadRequest();
             }
-            var existingproduct = _context.Products.FindAsync(id);
-            if (existingproduct.Result == null)
+            var existingproduct = await _context.Products.FindAsync(id);
+            if (existingproduct == null)
             {
                 return Ok(new { Message = $"Product with id:{id} does not exist" });
             }
-            existingproduct.Result.Name = product.Name;
-            existingproduct.Result.Description = product.Description;
-            existingproduct.Result.Category = product.Category;
-            existingproduct.Result.Price = product.Price;
+            product.Id = existingproduct.Id;
+            _context.Entry(existingproduct).CurrentValues.SetValues(product);
             try
             {
                 await _context.SaveChangesAsync();
-                return Ok(new { Message = $"Product id:{existingproduct.Result.Id} updated" });
+                return Ok(new { Message = $"Product id:{existingproduct.Id} updated" });
             }
             catch (Exception)
             {
