@@ -54,33 +54,33 @@ namespace Webshop.Controllers
             };
         }
 
-        //[Authorize]
-        //public IActionResult Add(Guid productId)
-        //{
-        //    var product = _productService.GetById(productId);
-        //    var cart = HttpContext.Session.Get<List<CartProduct>>(SessionCartName);
-        //    if (cart != null)
-        //    {
-        //        if (cart.Any(p => p.Product.Id == productId))
-        //        {
-        //            var index = cart.FindIndex(p => p.Product.Id == productId);
-        //            cart[index].Quantity++;
-        //        }
-        //        else
-        //        {
-        //            cart.Add(new CartProduct { Product = product, Quantity = 1 });
-        //        }
-        //    }
-        //    else
-        //    {
-        //        cart = new List<CartProduct> { };
-        //        cart.Add(new CartProduct { Product = product, Quantity = 1 });
-        //    }
-        //    var totalPrice = cart.Sum(p => p.Product.Price * p.Quantity);
-        //    HttpContext.Session.Set(SessionCartName, cart);
-        //    HttpContext.Session.Set<decimal>(SessionTotalPrice, totalPrice);
-        //    return RedirectToAction("Index", "Product");
-        //}
+        [Authorize]
+        public async Task<IActionResult> Add(Guid productId)
+        {
+            var product = await _productService.GetById(productId);
+            var cart = HttpContext.Session.Get<List<CartProduct>>(SessionCartName);
+            if (cart != null)
+            {
+                if (cart.Any(p => p.Product.Id == productId))
+                {
+                    var index = cart.FindIndex(p => p.Product.Id == productId);
+                    cart[index].Quantity++;
+                }
+                else
+                {
+                    cart.Add(new CartProduct { Product = product, Quantity = 1 });
+                }
+            }
+            else
+            {
+                cart = new List<CartProduct> { };
+                cart.Add(new CartProduct { Product = product, Quantity = 1 });
+            }
+            var totalPrice = cart.Sum(p => p.Product.Price * p.Quantity);
+            HttpContext.Session.Set(SessionCartName, cart);
+            HttpContext.Session.Set<decimal>(SessionTotalPrice, totalPrice);
+            return RedirectToAction("Index", "Product");
+        }
     }
     public static class SessionExtension
     {
