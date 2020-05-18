@@ -32,7 +32,7 @@ namespace Webshop.Controllers
         {
             var response = await _orderService.CreateOrder(cartvm);
             
-            return RedirectToAction("Details", "Order", response.Id);
+            return RedirectToAction("Details", "Order", new { id = response.Id });
         }
 
         public async Task<IActionResult> Details(Guid id) 
