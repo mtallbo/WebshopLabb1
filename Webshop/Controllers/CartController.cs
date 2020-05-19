@@ -81,6 +81,30 @@ namespace Webshop.Controllers
             HttpContext.Session.Set<decimal>(SessionTotalPrice, totalPrice);
             return RedirectToAction("Index", "Product");
         }
+
+        [Authorize]
+        public async Task<IActionResult> Remove(Guid productId) 
+        {
+            var cart = HttpContext.Session.Get<List<CartProduct>>(SessionCartName);
+            if(cart != null)
+            {
+                if(cart.Any(p => p.Product.Id == productId))
+                {
+                    var index = cart.FindIndex(p => p.Product.Id == productId);
+                    if(cart[index].Quantity == 1)
+                    {
+                        cart.RemoveAt(index);
+                    } else
+                    {
+                        cart[index].Quantity--;
+                    }
+                }
+            }
+            var totalPrice = cart.Sum(p => p.Product.Price * p.Quantity);
+            HttpContext.Session.Set(SessionCartName, cart);
+            HttpContext.Session.Set<decimal>(SessionTotalPrice, totalPrice);
+            return RedirectToAction("Index", "Cart");
+        }
     }
     public static class SessionExtension
     {
