@@ -26,7 +26,10 @@ else
                         <div class="py-2 text-uppercase">Pris</div>
                     </th>
                     <th scope="col" class="border-0 bg-light">
-                        <div class="py-2 text-uppercase">Quantity</div>
+                        <div class="py-2 text-uppercase">Antal</div>
+                    </th>
+                    <th scope="col" class="border-0 bg-light">
+                        <div class="py-2 text-uppercase">Ändra</div>
                     </th>
                 </tr>
             </thead>
@@ -49,8 +52,20 @@ else
                             </div>
                         </th>
                         <td class="border-0 align-middle"><strong>@Model.CartProducts[i].Product.Price</strong></td>
-                        <td class="border-0 align-middle"><strong>@Model.CartProducts[i].Quantity</strong><div class="float-right" onclick="RemoveFromCart('@Model.CartProducts[i].Product.Id')"><span class="jam jam-minus"></span></div></td>
-                          
+                        <td class="border-0 align-middle">
+                                <div>
+                                    <strong class="float-left ">@Model.CartProducts[i].Quantity</strong>
+                                </div>
+                        </td>
+                        <td class="border-0 align-middle">
+                            <div onclick="RemoveFromCart('@Model.CartProducts[i].Product.Id')">
+                                <span class="jam jam-minus float-left"></span>
+                            </div>
+                            <div onclick="AddToCart('@Model.CartProducts[i].Product.Id')">
+                                <span class="jam jam-plus float-left"></span>
+                            </div>
+                        </td>
+
                     </tr>
                 </tbody>
             }
