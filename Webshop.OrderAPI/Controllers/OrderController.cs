@@ -42,7 +42,8 @@ namespace Webshop.OrderAPI.Controllers
             {
                 return BadRequest();
             }
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == id);
+
             if (order != null)
             {
                 return order;

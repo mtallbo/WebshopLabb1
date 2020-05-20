@@ -5,6 +5,7 @@
 
 const ADDTOCART_URL = 'https://localhost:44318/Cart/Add?productId='
 const REMOVEFROMCART_URL = 'https://localhost:44318/Cart/Remove?productId='
+
 function AddToCart(productid) {
     fetch(ADDTOCART_URL + productid)
         .then(function(res) {
@@ -13,8 +14,8 @@ function AddToCart(productid) {
 };
 
 function RemoveFromCart(productid) {
-    fetch(REMOVEFROMCART_URL + productid).then(function (res) {
-        location.reload()
-
+    fetch(REMOVEFROMCART_URL + productid)
+        .then(function (res) {
+            location.reload()
     })
 };
