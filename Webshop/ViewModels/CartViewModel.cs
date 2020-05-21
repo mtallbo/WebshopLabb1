@@ -9,6 +9,7 @@ namespace Webshop.ViewModels
     public class CartViewModel
     {
         public ApplicationUser User { get; set; }
-        public IEnumerable<CartProduct> CartProducts { get; set; }
+        public List<CartProduct> CartProducts { get; set; }
+
     }
 }

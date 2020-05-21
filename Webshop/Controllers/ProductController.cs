@@ -12,20 +12,21 @@ namespace Webshop.Controllers
     public class ProductController : Controller
     {
         private readonly IProductService _productService;
+
         public ProductController(IProductService productservice)
         {
             _productService = productservice;
         }
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var products = _productService.GetAll();
+            var products = await _productService.GetAll();
             return View(products);
         }
 
-        public IActionResult Details(Guid productId)
+        public async Task<IActionResult> Details(Guid productId)
         {
-            var product = _productService.GetById(productId);
+            var product = await _productService.GetById(productId);
             if (product == null) 
             {
                 return NotFound();

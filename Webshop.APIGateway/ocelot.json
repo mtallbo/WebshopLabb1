@@ -1,0 +1,55 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/product/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "44313"
+        }
+      ],
+      "UpstreamPathTemplate": "/product/",
+      "UpstreamHttpMethod": [ "GET", "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/product/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "44313"
+        }
+      ],
+      "UpstreamPathTemplate": "/product/{id}",
+      "UpstreamHttpMethod": [ "PUT", "DELETE", "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/order/",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "44321"
+        }
+      ],
+      "UpstreamPathTemplate": "/order/add",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/order/{id}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "44321"
+        }
+      ],
+      "UpstreamPathTemplate": "/order/{id}",
+      "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5001"
+  }
+}
