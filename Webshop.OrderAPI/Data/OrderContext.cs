@@ -12,6 +12,14 @@ namespace Webshop.OrderAPI.Data
         public OrderContext(DbContextOptions<OrderContext> options): base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.OrderItems)
+                .WithOne(or => or.Order)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
     }
