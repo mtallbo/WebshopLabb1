@@ -47,7 +47,7 @@ namespace Webshop.ProductAPI.Controllers
                 return product;
             } else
             {
-                return Ok(new { Message = $"Product with id:{id} does not exist" });
+                return BadRequest(new { Message = $"Product with id:{id} does not exist" });
             }
         }
 
@@ -61,7 +61,7 @@ namespace Webshop.ProductAPI.Controllers
             var existingproduct = await _context.Products.FindAsync(id);
             if (existingproduct == null)
             {
-                return Ok(new { Message = $"Product with id:{id} does not exist" });
+                return BadRequest(new { Message = $"Product with id:{id} does not exist" });
             }
             product.Id = existingproduct.Id;
             _context.Entry(existingproduct).CurrentValues.SetValues(product);
@@ -98,7 +98,7 @@ namespace Webshop.ProductAPI.Controllers
             var product = await _context.Products.FindAsync(id);
             if(product == null)
             {
-                return Ok(new { Message = $"Product id:{id} does not exist" });
+                return BadRequest(new { Message = $"Product id:{id} does not exist" });
             }
             _context.Products.Remove(product);
             await _context.SaveChangesAsync();
