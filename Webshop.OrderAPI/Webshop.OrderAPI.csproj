@@ -5,6 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20200518092706_add_orderitem.cs" />
+    <Compile Remove="Migrations\20200518092706_add_orderitem.Designer.cs" />
+    <Compile Remove="Migrations\20200518093111_add_price_to_orderitem.cs" />
+    <Compile Remove="Migrations\20200518093111_add_price_to_orderitem.Designer.cs" />
+    <Compile Remove="Migrations\20200518101938_add_phone_and_email.cs" />
+    <Compile Remove="Migrations\20200518101938_add_phone_and_email.Designer.cs" />
+    <Compile Remove="Migrations\20200524210146_fix_order_relation.cs" />
+    <Compile Remove="Migrations\20200524210146_fix_order_relation.Designer.cs" />
+    <Compile Remove="Migrations\20200524210331_fix_orderrelation.cs" />
+    <Compile Remove="Migrations\20200524210331_fix_orderrelation.Designer.cs" />
+    <Compile Remove="Migrations\20200524210835_fix_relation.cs" />
+    <Compile Remove="Migrations\20200524210835_fix_relation.Designer.cs" />
+    <Compile Remove="Migrations\20200524212248_fix_all.cs" />
+    <Compile Remove="Migrations\20200524212248_fix_all.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.4">
