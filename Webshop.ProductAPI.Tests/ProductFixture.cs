@@ -23,7 +23,7 @@ namespace Webshop.ProductAPI.Tests
             {
                 var testProduct = new Product
                 {
-                    Id = Guid.Parse("df46fa43-2b5f-460b-832e-a611e57aeec6"),
+                    Id = Guid.NewGuid(),
                     Name = "Test",
                     DateCreated = DateTime.Now,
                     Description = "Test",
