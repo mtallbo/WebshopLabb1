@@ -50,7 +50,7 @@ namespace Webshop.OrderAPI.Controllers
             }
             else
             {
-                return Ok(new { Message = $"Order with id:{id} does not exist" });
+                return BadRequest(new { Message = $"Order with id:{id} does not exist" });
             }
         }
 
@@ -64,7 +64,7 @@ namespace Webshop.OrderAPI.Controllers
             var existingorder = await _context.Orders.FindAsync(id);
             if (existingorder == null)
             {
-                return Ok(new { Message = $"Order with id:{id} does not exist" });
+                return BadRequest(new { Message = $"Order with id:{id} does not exist" });
             }
             order.Id = existingorder.Id;
             _context.Entry(existingorder).CurrentValues.SetValues(order);
@@ -101,7 +101,7 @@ namespace Webshop.OrderAPI.Controllers
             var order = await _context.Orders.FindAsync(id);
             if (order == null)
             {
-                return Ok(new { Message = $"Order id:{id} does not exist" });
+                return BadRequest(new { Message = $"Order id:{id} does not exist" });
             }
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.ProductAPI.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.OrderAPI.Tests", "Webshop.OrderAPI.Tests\Webshop.OrderAPI.Tests.csproj", "{70376E02-FCBC-42CE-BC77-4CA3E7AED229}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Webshop.APIGateway", "Webshop.APIGateway\Webshop.APIGateway.csproj", "{B5A7E212-6183-4732-A3DE-18B7FF89984E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Webshop.APIGateway", "Webshop.APIGateway\Webshop.APIGateway.csproj", "{B5A7E212-6183-4732-A3DE-18B7FF89984E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

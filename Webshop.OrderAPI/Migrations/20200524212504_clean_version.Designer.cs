@@ -10,8 +10,8 @@ using Webshop.OrderAPI.Data;
 namespace Webshop.OrderAPI.Migrations
 {
     [DbContext(typeof(OrderContext))]
-    [Migration("20200518093111_add_price_to_orderitem")]
-    partial class add_price_to_orderitem
+    [Migration("20200524212504_clean_version")]
+    partial class clean_version
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,9 @@ namespace Webshop.OrderAPI.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
@@ -40,6 +43,9 @@ namespace Webshop.OrderAPI.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalCode")
@@ -59,10 +65,7 @@ namespace Webshop.OrderAPI.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("OrderId1")
+                    b.Property<Guid?>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("Price")
@@ -73,16 +76,16 @@ namespace Webshop.OrderAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId1");
+                    b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("Webshop.OrderAPI.Models.OrderItem", b =>
                 {
                     b.HasOne("Webshop.OrderAPI.Models.Order", "Order")
                         .WithMany("OrderItems")
-                        .HasForeignKey("OrderId1");
+                        .HasForeignKey("OrderId");
                 });
 #pragma warning restore 612, 618
         }
