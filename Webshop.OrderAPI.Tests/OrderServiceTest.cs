@@ -42,72 +42,72 @@ namespace Webshop.OrderAPI.Tests
             }
         }
         
-        [Fact]
-        public async Task PostSingle_Return200()
-        {
-            using (var client = new TestClientProvider().Client)
-            {
-                var testOrder = new Order
-                {
-                    Id = Guid.Parse("7d3e444b-5dc3-453e-b5cf-c65caf744ca4"),
-                    Adress = "Testgatan",
-                    City = "Sthlm",
-                    Email = "test@test.se",
-                    FirstName = "Mikael",
-                    LastName = "Tallbo",
-                    PhoneNumber = "123 123 123",
-                    PostalCode = "174 43",
-                    OrderItems = new List<OrderItem>()
-                    {
-                        new OrderItem()
-                        {
-                            Name = "TEST ITEM",
-                            Quantity = 1,
-                            Order = new Order(){Id = Guid.Parse("7d3e444b-5dc3-453e-b5cf-c65caf744ca4")}
-                        }
-                    }
-                };
+        //[Fact]
+        //public async Task PostSingle_Return200()
+        //{
+        //    using (var client = new TestClientProvider().Client)
+        //    {
+        //        var testOrder = new Order
+        //        {
+        //            Id = Guid.Parse("7d3e444b-5dc3-453e-b5cf-c65caf744ca4"),
+        //            Adress = "Testgatan",
+        //            City = "Sthlm",
+        //            Email = "test@test.se",
+        //            FirstName = "Mikael",
+        //            LastName = "Tallbo",
+        //            PhoneNumber = "123 123 123",
+        //            PostalCode = "174 43",
+        //            OrderItems = new List<OrderItem>()
+        //            {
+        //                new OrderItem()
+        //                {
+        //                    Name = "TEST ITEM",
+        //                    Quantity = 1,
+        //                    Order = new Order(){Id = Guid.Parse("7d3e444b-5dc3-453e-b5cf-c65caf744ca4")}
+        //                }
+        //            }
+        //        };
 
-                var serializedOrder = new StringContent(JsonConvert.SerializeObject(testOrder), Encoding.UTF8, "application/json");
-                var response = await client.PostAsync($"/api/order", serializedOrder);
+        //        var serializedOrder = new StringContent(JsonConvert.SerializeObject(testOrder), Encoding.UTF8, "application/json");
+        //        var response = await client.PostAsync($"/api/order", serializedOrder);
 
-                Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-            }
-        }
-        [Fact]
-        public async Task UpdateSingle_Return204()
-        {
-            //id to remove
-            var id = "7d3e444b-5dc3-453e-b5cf-c65caf744ca4";
-            using (var client = new TestClientProvider().Client)
-            {
-                //get order deserialized
-                var orderResponse = await client.GetAsync($"/api/order/{id}");
-                var content = await orderResponse.Content.ReadAsStringAsync();
+        //        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        //    }
+        //}
+        //[Fact]
+        //public async Task UpdateSingle_Return204()
+        //{
+        //    //id to remove
+        //    var id = "7d3e444b-5dc3-453e-b5cf-c65caf744ca4";
+        //    using (var client = new TestClientProvider().Client)
+        //    {
+        //        //get order deserialized
+        //        var orderResponse = await client.GetAsync($"/api/order/{id}");
+        //        var content = await orderResponse.Content.ReadAsStringAsync();
 
-                var deserializedOrder = JsonConvert.DeserializeObject<Order>(content);
+        //        var deserializedOrder = JsonConvert.DeserializeObject<Order>(content);
 
-                //update order
-                deserializedOrder.FirstName = "forsenCD";
+        //        //update order
+        //        deserializedOrder.FirstName = "forsenCD";
 
-                //serialize order
-                var serializedProduct = new StringContent(JsonConvert.SerializeObject(deserializedOrder), Encoding.UTF8, "application/json");
+        //        //serialize order
+        //        var serializedProduct = new StringContent(JsonConvert.SerializeObject(deserializedOrder), Encoding.UTF8, "application/json");
 
-                var response = await client.PutAsync($"/api/order/{id}", serializedProduct);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-            }
-        }
+        //        var response = await client.PutAsync($"/api/order/{id}", serializedProduct);
+        //        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        //    }
+        //}
 
-        [Fact]
-        public async Task RemoveSingle_Return204()
-        {
-            //id to remove
-            var id = "7d3e444b-5dc3-453e-b5cf-c65caf744ca4";
-            using (var client = new TestClientProvider().Client)
-            {
-                var response = await client.DeleteAsync($"/api/order/{id}");
-                Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
-            }
-        }
+        //[Fact]
+        //public async Task RemoveSingle_Return204()
+        //{
+        //    //id to remove
+        //    var id = "7d3e444b-5dc3-453e-b5cf-c65caf744ca4";
+        //    using (var client = new TestClientProvider().Client)
+        //    {
+        //        var response = await client.DeleteAsync($"/api/order/{id}");
+        //        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        //    }
+        //}
     }
 }
