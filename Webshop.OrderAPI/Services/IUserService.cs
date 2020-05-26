@@ -8,7 +8,7 @@ namespace Webshop.OrderAPI.Services
 {
     public interface IUserService
     {
-        List<User> GetUsers();
+        List<User> GetAll();
         User Authenticate(string email, string password);
     }
 }

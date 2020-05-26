@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -9,7 +10,6 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Webshop.OrderAPI.Helpers;
 using Webshop.OrderAPI.Models;
 
 namespace Webshop.OrderAPI.Services
@@ -21,11 +21,11 @@ namespace Webshop.OrderAPI.Services
             new User { Id = Guid.NewGuid(), Email = "Test", Password = "Test"}
         };
 
-        private readonly AppSettings _appSettings;
+        private readonly IConfiguration _configuration;
 
-        public UserService(IOptions<AppSettings> appSetttings)
+        public UserService(IConfiguration configuration)
         {
-            _appSettings = appSetttings.Value;
+            _configuration = configuration;
         }
         
         public User Authenticate(string email, string password)
@@ -37,7 +37,7 @@ namespace Webshop.OrderAPI.Services
             }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_appSettings.Secret);
+            var key = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("Appsettings:Secret"));
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[] {
@@ -52,7 +52,7 @@ namespace Webshop.OrderAPI.Services
             return user;
         }
 
-        public List<User> GetUsers()
+        public List<User> GetAll()
         {
             return _users;
         }
