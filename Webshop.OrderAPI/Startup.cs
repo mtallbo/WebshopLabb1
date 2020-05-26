@@ -44,7 +44,6 @@ namespace Webshop.OrderAPI
                 //var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AppSettings:Secret"]));
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("VERYSECRETKEYFORSENCD"));
 
-
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

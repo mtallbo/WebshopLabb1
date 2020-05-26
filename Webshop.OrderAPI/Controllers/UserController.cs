@@ -26,8 +26,20 @@ namespace Webshop.OrderAPI.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]AuthenticateModel model)
         {
-            var user = _userService.Authenticate(model.Email, model.Password);
+            var user = _userService.Authenticate(model);
             if (user == null)
+            {
+                return BadRequest();
+            }
+            return Ok(user);
+        }
+
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public IActionResult Register([FromBody] AuthenticateModel model)
+        {
+            var user = _userService.Register(model);
+            if(user == null)
             {
                 return BadRequest();
             }
