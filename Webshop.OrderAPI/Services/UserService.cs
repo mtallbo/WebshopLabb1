@@ -18,7 +18,7 @@ namespace Webshop.OrderAPI.Services
     {
         private List<User> _users = new List<User> 
         {
-            new User { Id = Guid.NewGuid(), Email = "Test", Password = "Test"}
+            new User { Id = Guid.NewGuid(), Email = "Test"}
         };
 
         private readonly IConfiguration _configuration;
@@ -30,7 +30,7 @@ namespace Webshop.OrderAPI.Services
         
         public User Authenticate(AuthenticateModel model)
         {
-            var user = _users.SingleOrDefault(u => u.Email == model.Email && u.Password == model.Password);
+            var user = _users.SingleOrDefault(u => u.Email == model.Email);
             if(user == null)
             {
                 return null;
@@ -50,16 +50,17 @@ namespace Webshop.OrderAPI.Services
             User newUser = new User
             {
                 Id = Guid.NewGuid(),
-                Email = model.Email,
-                Password = model.Password
+                Email = model.Email
             };
-            var existingUser = _users.SingleOrDefault(u => u.Email == newUser.Email && u.Password == newUser.Password);
+            var existingUser = _users.SingleOrDefault(u => u.Email == newUser.Email);
             if(existingUser == null)
             {
                 _users.Add(newUser);
                 return newUser;
+            } else
+            {
+                return existingUser;
             }
-            return null;
         }
 
         public List<User> GetAll()

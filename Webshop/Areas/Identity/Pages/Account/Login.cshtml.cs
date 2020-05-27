@@ -12,6 +12,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using Webshop.Models;
+using Webshop.Services;
+using Microsoft.AspNetCore.Http;
+using Webshop.Controllers;
 
 namespace Webshop.Areas.Identity.Pages.Account
 {
@@ -21,14 +24,18 @@ namespace Webshop.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly IOrderService _orderService;
+
 
         public LoginModel(SignInManager<ApplicationUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IOrderService orderService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _orderService = orderService;
         }
 
         [BindProperty]
@@ -83,7 +90,8 @@ namespace Webshop.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
-                    //Här tänkte jag calla mina endpoints för att få en jwt token
+                    var token = await _orderService.GetToken(Input.Email);
+                    HttpContext.Session.Set("Token", token);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

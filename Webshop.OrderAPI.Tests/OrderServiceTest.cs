@@ -38,8 +38,7 @@ namespace Webshop.OrderAPI.Tests
             {
                 AuthenticateModel model = new AuthenticateModel()
                 {
-                    Email = "test@test.se",
-                    Password = "test",
+                    Email = "test@test.se"
                 };
                 var serializedModel = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
                 var reponse = await client.PostAsync($"/user/register", serializedModel);
