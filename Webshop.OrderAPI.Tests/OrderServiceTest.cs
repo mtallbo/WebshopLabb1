@@ -32,6 +32,21 @@ namespace Webshop.OrderAPI.Tests
             }
         }
         [Fact]
+        public async Task RegisterUserForToken_Return200()
+        {
+            using (var client = new TestClientProvider().Client)
+            {
+                AuthenticateModel model = new AuthenticateModel()
+                {
+                    Email = "test@test.se",
+                    Password = "test",
+                };
+                var serializedModel = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
+                var reponse = await client.PostAsync($"/user/register", serializedModel);
+                Assert.Equal(HttpStatusCode.OK, reponse.StatusCode);
+            }
+        }
+        [Fact]
         public async Task GetSingleNotAGuid_Return400()
         {
             using (var client = new TestClientProvider().Client)
@@ -41,73 +56,95 @@ namespace Webshop.OrderAPI.Tests
                 Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
             }
         }
-        
-        //[Fact]
-        //public async Task PostSingle_Return200()
-        //{
-        //    using (var client = new TestClientProvider().Client)
-        //    {
-        //        var testOrder = new Order
-        //        {
-        //            Id = Guid.Parse("7d3e444b-5dc3-453e-b5cf-c65caf744ca4"),
-        //            Adress = "Testgatan",
-        //            City = "Sthlm",
-        //            Email = "test@test.se",
-        //            FirstName = "Mikael",
-        //            LastName = "Tallbo",
-        //            PhoneNumber = "123 123 123",
-        //            PostalCode = "174 43",
-        //            OrderItems = new List<OrderItem>()
-        //            {
-        //                new OrderItem()
-        //                {
-        //                    Name = "TEST ITEM",
-        //                    Quantity = 1,
-        //                    Order = new Order(){Id = Guid.Parse("7d3e444b-5dc3-453e-b5cf-c65caf744ca4")}
-        //                }
-        //            }
-        //        };
 
-        //        var serializedOrder = new StringContent(JsonConvert.SerializeObject(testOrder), Encoding.UTF8, "application/json");
-        //        var response = await client.PostAsync($"/api/order", serializedOrder);
+        [Fact]
+        public async Task PostSingle_Return200()
+        {
+            using (var client = new TestClientProvider().Client)
+            {
+                var testOrder = new Order
+                {
+                    Id = Guid.NewGuid(),
+                    Adress = "Testgatan",
+                    City = "Sthlm",
+                    Email = "test@test.se",
+                    FirstName = "Mikael",
+                    LastName = "Tallbo",
+                    PhoneNumber = "123 123 123",
+                    PostalCode = "174 43",
+                    OrderItems = new List<OrderItem>()
+                    {
+                        new OrderItem()
+                        {
+                            Name = "TEST ITEM",
+                            Quantity = 1,
+                            Order = new Order(){Id = Guid.Parse("7d3e444b-5dc3-453e-b5cf-c65caf744ca4")}
+                        }
+                    }
+                };
+                var serializedOrder = new StringContent(JsonConvert.SerializeObject(testOrder), Encoding.UTF8, "application/json");
+                var response = await client.PostAsync($"/api/order", serializedOrder);
+                if (response.IsSuccessStatusCode)
+                {
+                    var orderResponse = response.Content.ReadAsStringAsync();
+                    var deserializedOrderReponse = JsonConvert.DeserializeObject<Order>(orderResponse.Result);
 
-        //        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
-        //    }
-        //}
-        //[Fact]
-        //public async Task UpdateSingle_Return204()
-        //{
-        //    //id to remove
-        //    var id = "7d3e444b-5dc3-453e-b5cf-c65caf744ca4";
-        //    using (var client = new TestClientProvider().Client)
-        //    {
-        //        //get order deserialized
-        //        var orderResponse = await client.GetAsync($"/api/order/{id}");
-        //        var content = await orderResponse.Content.ReadAsStringAsync();
+                    var deleteReponse = await client.DeleteAsync($"/api/order/{deserializedOrderReponse.Id}");
+                }
 
-        //        var deserializedOrder = JsonConvert.DeserializeObject<Order>(content);
+                Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            }
+        }
+        [Fact]
+        public async Task UpdateSingle_Return204()
+        {
+            using (var client = new TestClientProvider().Client)
+            {
+                var testOrder = new Order
+                {
+                    Id = Guid.NewGuid(),
+                    Adress = "Testgatan",
+                    City = "Sthlm",
+                    Email = "test@test.se",
+                    FirstName = "Mikael",
+                    LastName = "Tallbo",
+                    PhoneNumber = "123 123 123",
+                    PostalCode = "174 43",
+                    OrderItems = new List<OrderItem>()
+                    {
+                        new OrderItem()
+                        {
+                            Name = "TEST ITEM",
+                            Quantity = 1,
+                            Order = new Order(){Id = Guid.Parse("7d3e444b-5dc3-453e-b5cf-c65caf744ca4")}
+                        }
+                    }
+                };
+                //add order
+                var serializedOrder = new StringContent(JsonConvert.SerializeObject(testOrder), Encoding.UTF8, "application/json");
+                var response = await client.PostAsync($"/api/order", serializedOrder);
+                if (response.IsSuccessStatusCode)
+                {
+                    //deserialize order that was returned
+                    var orderResponse = response.Content.ReadAsStringAsync();
+                    var deserializedOrderReponse = JsonConvert.DeserializeObject<Order>(orderResponse.Result);
 
-        //        //update order
-        //        deserializedOrder.FirstName = "forsenCD";
+                    //update order that was returned
+                    var updatedOrder = deserializedOrderReponse;
+                    updatedOrder.FirstName = "Max";
+                    var serializedUpdatedOrder = new StringContent(JsonConvert.SerializeObject(updatedOrder), Encoding.UTF8, "application/json");
 
-        //        //serialize order
-        //        var serializedProduct = new StringContent(JsonConvert.SerializeObject(deserializedOrder), Encoding.UTF8, "application/json");
 
-        //        var response = await client.PutAsync($"/api/order/{id}", serializedProduct);
-        //        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-        //    }
-        //}
+                    var putReponse = await client.PutAsync($"/api/order/{deserializedOrderReponse.Id}", serializedUpdatedOrder);
+                    if (putReponse.IsSuccessStatusCode)
+                    {
+                        //remove order
+                        var deleteReponse = await client.DeleteAsync($"/api/order/{deserializedOrderReponse.Id}");
+                    }
 
-        //[Fact]
-        //public async Task RemoveSingle_Return204()
-        //{
-        //    //id to remove
-        //    var id = "7d3e444b-5dc3-453e-b5cf-c65caf744ca4";
-        //    using (var client = new TestClientProvider().Client)
-        //    {
-        //        var response = await client.DeleteAsync($"/api/order/{id}");
-        //        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
-        //    }
-        //}
+                }
+                Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+            }
+        }
     }
 }

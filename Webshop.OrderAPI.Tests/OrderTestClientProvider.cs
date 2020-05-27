@@ -1,14 +1,10 @@
-﻿using Microsoft.AspNetCore.TestHost;
-using Microsoft.AspNetCore.Hosting;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Net.Http;
-using System.Text;
-using Webshop.OrderAPI;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Webshop.OrderAPI.Data;
-using Microsoft.EntityFrameworkCore;
 using Webshop.OrderAPI.Data;
 
 namespace Webshop.OrderAPI.Tests
@@ -21,15 +17,17 @@ namespace Webshop.OrderAPI.Tests
         {
             IConfigurationRoot configuration = new ConfigurationBuilder()
                 .SetBasePath(AppContext.BaseDirectory)
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
             WebHostBuilder webHostBuilder = new WebHostBuilder();
             webHostBuilder.ConfigureServices(s => s.AddDbContext<OrderContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))));
+            webHostBuilder.UseConfiguration(configuration);
 
             //Make sure startup is referring to correct dependency
             webHostBuilder.UseStartup<Startup>();
+
 
             Server = new TestServer(webHostBuilder);
 
