@@ -23,7 +23,7 @@ namespace Webshop.OrderAPI.Tests
             WebHostBuilder webHostBuilder = new WebHostBuilder();
             webHostBuilder.ConfigureServices(s => s.AddDbContext<OrderContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"))));
-
+            webHostBuilder.UseConfiguration(configuration);
 
             //Make sure startup is referring to correct dependency
             webHostBuilder.UseStartup<Startup>();

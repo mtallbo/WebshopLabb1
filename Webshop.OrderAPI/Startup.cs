@@ -41,8 +41,7 @@ namespace Webshop.OrderAPI
                     Configuration.GetConnectionString("DefaultConnection")));
 
             //had to comment out following code because tests wont read the value(returns null)
-                //var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AppSettings:Secret"]));
-            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("VERYSECRETKEYFORSENCD"));
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["AppSettings:Secret"]));
 
             services.AddAuthentication(x =>
             {

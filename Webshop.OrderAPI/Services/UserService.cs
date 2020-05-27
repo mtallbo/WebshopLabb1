@@ -56,10 +56,10 @@ namespace Webshop.OrderAPI.Services
             var existingUser = _users.SingleOrDefault(u => u.Email == newUser.Email && u.Password == newUser.Password);
             if(existingUser == null)
             {
-                return null;
+                _users.Add(newUser);
+                return newUser;
             }
-            _users.Add(newUser);
-            return newUser;
+            return null;
         }
 
         public List<User> GetAll()
