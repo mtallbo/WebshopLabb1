@@ -68,7 +68,7 @@ namespace Webshop.OrderAPI.Services
             return _users;
         }
 
-        private SecurityToken GenerateToken(User user)
+        public SecurityToken GenerateToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_configuration.GetValue<string>("Appsettings:Secret"));

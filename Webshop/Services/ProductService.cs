@@ -23,7 +23,6 @@ namespace Webshop.Services
         public async Task<List<Product>> GetAll()
         {
             var response = await _httpClient.GetAsync("product/");
-            response.EnsureSuccessStatusCode();
             var productResponse = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<List<Product>>(productResponse);
@@ -32,7 +31,6 @@ namespace Webshop.Services
         public async Task<Product> GetById(Guid id)
         {
             var response = await _httpClient.GetAsync($"product/{id}");
-            response.EnsureSuccessStatusCode();
             var productResponse = await response.Content.ReadAsStringAsync();
 
             return JsonConvert.DeserializeObject<Product>(productResponse);

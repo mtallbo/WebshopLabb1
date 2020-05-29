@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,5 +12,6 @@ namespace Webshop.OrderAPI.Services
         List<User> GetAll();
         User Authenticate(AuthenticateModel model);
         User Register(AuthenticateModel model);
+        SecurityToken GenerateToken(User user);
     }
 }
