@@ -15,7 +15,7 @@ namespace Webshop.Controllers
     public class OrderController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
-        private readonly IOrderService _orderService;            
+        private readonly IOrderService _orderService;
 
         public const string SessionCartName = "_Cart";
         public const string SessionTotalPrice = "_TotalPrice";
@@ -30,18 +30,21 @@ namespace Webshop.Controllers
         [HttpPost]
         public async Task<IActionResult> Checkout(CartViewModel cartvm)
         {
-            var response = await _orderService.CreateOrder(cartvm);
+            var token = HttpContext.Session.Get<TokenBearer>("Token");
+            var response = await _orderService.CreateOrder(cartvm, token);
             if(response != null)
             {
-                HttpContext.Session.Clear();
+                HttpContext.Session.Set(SessionCartName, new List<CartProduct>());
+                HttpContext.Session.Set<decimal>(SessionTotalPrice, 0);
             }
-            
+
             return RedirectToAction("Details", "Order", new { id = response.Id });
         }
 
         public async Task<IActionResult> Details(Guid id) 
         {
-            var order = await _orderService.GetById(id);
+            var token = HttpContext.Session.Get<TokenBearer>("Token");
+            var order = await _orderService.GetById(id, token);
             if (order == null)
             {
                 return NotFound();

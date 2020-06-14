@@ -28,7 +28,7 @@ namespace Webshop
 
             services.AddSession(options =>
             {
-                options.Cookie.Name = "Cart.Session";
+                options.Cookie.Name = "Webshop.Session";
                 options.IdleTimeout = TimeSpan.FromMinutes(10);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;

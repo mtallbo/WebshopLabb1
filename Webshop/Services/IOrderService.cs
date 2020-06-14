@@ -9,7 +9,8 @@ namespace Webshop.Services
 {
     public interface IOrderService
     {
-        Task<Order> GetById(Guid id);
-        Task<Order> CreateOrder(CartViewModel cartviewModel);
+        Task<Order> GetById(Guid id, TokenBearer token);
+        Task<Order> CreateOrder(CartViewModel cartviewModel, TokenBearer token);
+        Task<TokenBearer> GetToken(string email);
     }
 }

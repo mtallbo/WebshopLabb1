@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Webshop.OrderAPI.Data;
@@ -9,8 +10,9 @@ using Webshop.OrderAPI.Models;
 
 namespace Webshop.OrderAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
         private readonly OrderContext _context;
@@ -20,7 +22,7 @@ namespace Webshop.OrderAPI.Controllers
             _context = context;
         }
 
-        //GET: api/product
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
