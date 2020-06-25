@@ -33,9 +33,9 @@ namespace Webshop.Controllers
             var token = HttpContext.Session.Get<TokenBearer>("Token");
             if(token == null)
             {
-                var user = _userManager.FindByNameAsync(User.Identity.Name);
-                var getToken = await _orderService.GetToken(user.Result.Email);
-                HttpContext.Session.Set("Token", getToken.Token);
+                var getToken = await _orderService.GetToken(User.Identity.Name);
+                HttpContext.Session.Set("Token", getToken);
+                token = HttpContext.Session.Get<TokenBearer>("Token");
             }
             var response = await _orderService.CreateOrder(cartvm, token);
             if(response != null)
