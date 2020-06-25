@@ -31,6 +31,12 @@ namespace Webshop.Controllers
         public async Task<IActionResult> Checkout(CartViewModel cartvm)
         {
             var token = HttpContext.Session.Get<TokenBearer>("Token");
+            if(token == null)
+            {
+                var user = _userManager.FindByNameAsync(User.Identity.Name);
+                var getToken = _orderService.GetToken(user.Result.Email);
+                HttpContext.Session.Set("Token", getToken);
+            }
             var response = await _orderService.CreateOrder(cartvm, token);
             if(response != null)
             {

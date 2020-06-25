@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-Webshop-D3D0F83F-FF2F-4A77-A6DA-991E14A36A7B</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20200529202708_personaldata_customuser.cs" />
+    <Compile Remove="Data\Migrations\20200529202708_personaldata_customuser.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.4" />
